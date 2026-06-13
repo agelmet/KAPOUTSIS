@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ιωάννης Καπούτσης — Εκτελωνιστικό Γραφείο</title>
+<meta name="description" content="Εκτελωνισμός οχημάτων κάθε κατηγορίας — αυτοκίνητα, μοτοσυκλέτες, φορτηγά, αντίκες, μηχανήματα. Καθαρές διαδικασίες, σωστή εκτίμηση κόστους πριν την αγορά, στήριξη σε κάθε βήμα.">
+<link rel="icon" href="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png">
+<meta property="og:title" content="Ιωάννης Καπούτσης — Εκτελωνιστικό Γραφείο">
+<meta property="og:description" content="Εκτελωνισμός οχημάτων με καθαρές διαδικασίες και σωστή εκτίμηση κόστους από την αρχή.">
+<meta property="og:image" content="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a2024;
+  --slate:#4c565c;
+  --slate-2:#6b757b;
+  --teal:#1c7270;
+  --teal-deep:#13524f;
+  --teal-soft:#e3efee;
+  --paper:#f4f5f3;
+  --paper-2:#eceeea;
+  --line:#d4d8d2;
+  --line-strong:#c0c5bd;
+  --white:#fdfdfc;
+  --stamp:#c2453c;
+  --display:'Archivo',sans-serif;
+  --body:'Spline Sans',sans-serif;
+  --mono:'Spline Sans Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.65,.05,.36,1);
+  --maxw:1240px;
+  --pad:clamp(1.25rem,5vw,4.5rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--body);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::selection{background:var(--teal);color:#fff}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--slate);border:3px solid var(--paper-2);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--teal)}
+
+/* ---------- Loader ---------- */
+#loader{
+  position:fixed;inset:0;z-index:2000;background:var(--ink);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  transition:opacity .7s var(--ease),visibility .7s;
+}
+#loader.done{opacity:0;visibility:hidden}
+.load-stamp{
+  font-family:var(--mono);color:var(--teal-soft);font-size:clamp(.7rem,2vw,.85rem);
+  letter-spacing:.35em;text-transform:uppercase;
+  display:flex;gap:.6em;align-items:center;
+  opacity:0;animation:loadIn .6s var(--ease) .15s forwards;
+}
+.load-bar{
+  margin-top:1.4rem;width:min(60vw,260px);height:2px;background:rgba(255,255,255,.14);overflow:hidden;border-radius:2px;
+}
+.load-bar span{display:block;height:100%;width:0;background:var(--teal);animation:loadFill 1.5s var(--ease-io) .2s forwards}
+.load-no{font-family:var(--mono);color:rgba(255,255,255,.4);font-size:.7rem;letter-spacing:.3em;margin-top:1rem;opacity:0;animation:loadIn .6s ease .5s forwards}
+@keyframes loadIn{to{opacity:1}}
+@keyframes loadFill{to{width:100%}}
+
+/* ---------- Nav ---------- */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  transition:background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{background:rgba(244,245,243,.88);backdrop-filter:blur(14px);border-bottom-color:var(--line);box-shadow:0 1px 30px rgba(26,32,36,.05)}
+.nav{
+  max-width:var(--maxw);margin:0 auto;padding:1.1rem var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.brand{display:flex;align-items:center;gap:.7rem;min-width:0}
+.brand img{height:40px;width:auto;transition:height .4s var(--ease)}
+header.scrolled .brand img{height:34px}
+.brand-tx{line-height:1.05;letter-spacing:.01em}
+.brand-tx b{font-family:var(--display);font-weight:800;font-size:.98rem;color:var(--ink);display:block;white-space:nowrap}
+.brand-tx span{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;color:var(--slate-2);text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:2.1rem}
+.nav-links a{font-size:.86rem;font-weight:500;color:var(--slate);position:relative;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--teal);transition:width .3s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:.5em;
+  background:var(--ink);color:var(--white);padding:.7em 1.25em;border-radius:2px;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;font-weight:500;
+  transition:background .3s,transform .3s var(--ease);
+}
+.nav-cta:hover{background:var(--teal);transform:translateY(-1px)}
+.nav-cta svg{width:14px;height:14px}
+.burger{display:none;width:30px;height:22px;position:relative;z-index:1100}
+.burger span{position:absolute;left:0;height:2px;width:100%;background:var(--ink);transition:.4s var(--ease)}
+.burger span:nth-child(1){top:0}.burger span:nth-child(2){top:10px}.burger span:nth-child(3){top:20px}
+.burger.open span:nth-child(1){top:10px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){top:10px;transform:rotate(-45deg)}
+.mobile-menu{
+  position:fixed;inset:0;z-index:1050;background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;padding:var(--pad);
+  transform:translateY(-100%);transition:transform .6s var(--ease);
+}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu a{color:var(--white);font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,8vw,2.6rem);padding:.35em 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:baseline;gap:1rem}
+.mobile-menu a .mm-no{font-family:var(--mono);font-size:.8rem;color:var(--teal);font-weight:500}
+.mm-foot{margin-top:2.5rem;font-family:var(--mono);color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:.12em}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  padding:clamp(7rem,14vh,10rem) var(--pad) clamp(2rem,5vh,3.5rem);
+  background:var(--paper);overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:clamp(60px,8vw,110px) clamp(60px,8vw,110px);
+  mask-image:radial-gradient(ellipse 80% 90% at 70% 30%,#000 30%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 90% at 70% 30%,#000 30%,transparent 78%);
+}
+.hero-route{position:absolute;top:0;right:0;width:min(46vw,620px);height:100%;z-index:0;pointer-events:none}
+.hero-route path,.hero-route line{stroke:var(--line-strong)}
+.hero-route .live{stroke:var(--teal);stroke-dasharray:6 9;animation:dash 2.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-30}}
+.hero-route .node{fill:var(--paper);stroke:var(--teal);stroke-width:2}
+.hero-route .pulse{fill:var(--teal);transform-origin:center;animation:pulse 2.6s var(--ease) infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+.hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;width:100%}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.7em;font-family:var(--mono);
+  font-size:clamp(.7rem,1.7vw,.82rem);letter-spacing:.16em;text-transform:uppercase;color:var(--teal-deep);
+  background:var(--teal-soft);border:1px solid var(--line);padding:.5em 1em;border-radius:2px;margin-bottom:clamp(1.4rem,3vh,2rem);
+}
+.hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(28,114,112,.5);animation:beat 2s infinite}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(28,114,112,.5)}70%{box-shadow:0 0 0 9px rgba(28,114,112,0)}100%{box-shadow:0 0 0 0 rgba(28,114,112,0)}}
+.hero h1{
+  font-family:var(--display);font-weight:900;line-height:.96;letter-spacing:-.02em;
+  font-size:clamp(2.6rem,8.5vw,7rem);color:var(--ink);max-width:14ch;
+}
+.hero h1 .t{color:var(--teal)}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln i{display:block;font-style:normal;transform:translateY(110%);animation:rise .9s var(--ease) forwards}
+.hero h1 .ln:nth-child(1) i{animation-delay:.1s}
+.hero h1 .ln:nth-child(2) i{animation-delay:.22s}
+.hero h1 .ln:nth-child(3) i{animation-delay:.34s}
+@keyframes rise{to{transform:translateY(0)}}
+.hero-sub{
+  margin-top:clamp(1.4rem,3vh,2.1rem);max-width:46ch;font-size:clamp(1rem,2.2vw,1.22rem);
+  color:var(--slate);opacity:0;animation:fadeUp .8s var(--ease) .6s forwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-actions{margin-top:clamp(1.8rem,4vh,2.6rem);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;opacity:0;animation:fadeUp .8s var(--ease) .72s forwards}
+.btn{
+  display:inline-flex;align-items:center;gap:.6em;padding:.95em 1.6em;border-radius:2px;
+  font-weight:600;font-size:.95rem;transition:all .3s var(--ease);
+}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:0 12px 30px -10px rgba(28,114,112,.5)}
+.btn-ghost{color:var(--ink);border:1px solid var(--line-strong)}
+.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.btn svg{width:16px;height:16px}
+.hero-meta{
+  position:absolute;right:var(--pad);bottom:clamp(2rem,5vh,3.5rem);z-index:2;text-align:right;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--slate-2);
+  opacity:0;animation:fadeUp .8s var(--ease) .9s forwards;
+}
+.hero-meta b{color:var(--teal-deep);font-weight:600}
+.scroll-cue{display:flex;align-items:center;gap:.6em;margin-top:clamp(2rem,4vh,2.8rem);font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--slate-2);opacity:0;animation:fadeUp .8s var(--ease) .85s forwards}
+.scroll-cue .ar{width:30px;height:1px;background:var(--slate-2);position:relative;overflow:hidden}
+.scroll-cue .ar::after{content:"";position:absolute;left:0;top:0;height:100%;width:12px;background:var(--teal);animation:slidear 1.8s var(--ease) infinite}
+@keyframes slidear{0%{left:-12px}100%{left:30px}}
+
+/* ---------- Marquee ---------- */
+.marquee{background:var(--ink);overflow:hidden;border-block:1px solid var(--ink);padding:1.05rem 0}
+.marquee-track{display:flex;white-space:nowrap;width:max-content;animation:scrollx 32s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{
+  font-family:var(--display);font-weight:700;font-size:clamp(1rem,2.4vw,1.5rem);
+  color:var(--white);display:inline-flex;align-items:center;text-transform:uppercase;letter-spacing:.01em;
+}
+.marquee-track .sep{color:var(--teal);margin:0 1.3rem;font-size:1.1em}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ---------- Section frame ---------- */
+section{position:relative}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(4.5rem,10vh,8rem) var(--pad)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.7em;font-family:var(--mono);font-size:.74rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1.4rem;
+}
+.eyebrow .no{color:var(--slate-2)}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--teal)}
+.sec-title{font-family:var(--display);font-weight:800;line-height:1.04;letter-spacing:-.018em;font-size:clamp(2rem,5vw,3.4rem);color:var(--ink);max-width:18ch}
+.lead{font-size:clamp(1.02rem,2vw,1.18rem);color:var(--slate);max-width:54ch}
+
+/* ---------- About ---------- */
+.about{background:var(--white);border-block:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+@media(min-width:920px){.about-grid{grid-template-columns:1.05fr .95fr}}
+.about-copy p{margin-top:1.15rem;color:var(--slate);font-size:clamp(1rem,1.7vw,1.08rem)}
+.about-copy p:first-of-type{margin-top:1.8rem}
+.about-copy strong{color:var(--ink);font-weight:600}
+.pullquote{
+  margin-top:2.4rem;padding:1.7rem 0 1.7rem 1.8rem;border-left:3px solid var(--teal);
+  font-family:var(--display);font-weight:600;font-size:clamp(1.25rem,2.8vw,1.7rem);line-height:1.3;color:var(--ink);letter-spacing:-.01em;
+}
+.about-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:0;overflow:hidden;
+  position:sticky;top:100px;
+}
+.card-head{padding:1.3rem 1.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--paper-2)}
+.card-head .cl{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--slate-2)}
+.card-head .st{display:inline-flex;align-items:center;gap:.4em;font-family:var(--mono);font-size:.7rem;color:var(--teal-deep);font-weight:500}
+.card-head .st .dt{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:beat 2s infinite}
+.spec{display:flex;justify-content:space-between;gap:1rem;padding:1.05rem 1.5rem;border-bottom:1px solid var(--line)}
+.spec:last-child{border-bottom:none}
+.spec dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--slate-2);text-transform:uppercase;flex-shrink:0}
+.spec dd{text-align:right;font-weight:600;color:var(--ink);font-size:.95rem}
+.spec dd small{display:block;font-weight:400;color:var(--slate-2);font-family:var(--body);font-size:.82rem}
+
+/* ---------- Services ---------- */
+.services{background:var(--paper)}
+.svc-list{margin-top:clamp(2.5rem,5vh,3.8rem);border-top:1px solid var(--line-strong)}
+.svc{border-bottom:1px solid var(--line-strong)}
+.svc-btn{width:100%;display:flex;align-items:center;gap:clamp(1rem,3vw,2.2rem);padding:clamp(1.5rem,3vw,2.1rem) 0;text-align:left;transition:color .3s}
+.svc-no{font-family:var(--mono);font-size:.85rem;color:var(--slate-2);flex-shrink:0;width:2.4ch;transition:color .3s}
+.svc-name{font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,3.8vw,2.3rem);letter-spacing:-.015em;flex:1;line-height:1.1;transition:transform .4s var(--ease),color .3s}
+.svc-ic{flex-shrink:0;width:clamp(34px,5vw,46px);height:clamp(34px,5vw,46px);border:1px solid var(--line-strong);border-radius:50%;display:grid;place-items:center;transition:all .4s var(--ease)}
+.svc-ic svg{width:18px;height:18px;stroke:var(--slate);transition:transform .4s var(--ease),stroke .3s}
+.svc:hover .svc-no{color:var(--teal)}
+.svc:hover .svc-name{transform:translateX(10px);color:var(--teal-deep)}
+.svc:hover .svc-ic{border-color:var(--teal);background:var(--teal)}
+.svc:hover .svc-ic svg{stroke:#fff}
+.svc.open .svc-ic{background:var(--ink);border-color:var(--ink)}
+.svc.open .svc-ic svg{stroke:#fff;transform:rotate(45deg)}
+.svc-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.svc-body-in{padding:0 0 clamp(1.6rem,3vw,2.2rem) calc(2.4ch + clamp(1rem,3vw,2.2rem));max-width:62ch}
+.svc-body-in p{color:var(--slate);font-size:clamp(1rem,1.7vw,1.08rem)}
+.svc-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.svc-tags span{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--teal-deep);background:var(--teal-soft);border:1px solid var(--line);padding:.4em .85em;border-radius:2px}
+
+/* ---------- Process ---------- */
+.process{background:var(--ink);color:var(--white);overflow:hidden}
+.process .eyebrow{color:var(--teal-soft)}
+.process .eyebrow::before{background:var(--teal-soft)}
+.process .eyebrow .no{color:rgba(255,255,255,.45)}
+.process .sec-title{color:var(--white)}
+.process .lead{color:rgba(255,255,255,.6);margin-top:1.3rem}
+.rail{margin-top:clamp(3rem,6vh,4.5rem);position:relative}
+.rail::before{content:"";position:absolute;left:0;top:26px;width:100%;height:1px;background:rgba(255,255,255,.14)}
+.rail-fill{position:absolute;left:0;top:26px;height:1px;background:var(--teal);width:0;transition:width 1.3s var(--ease-io)}
+.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:2.4rem 1.5rem}
+@media(min-width:780px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{position:relative}
+.step-dot{width:54px;height:54px;border-radius:50%;background:var(--ink);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;font-family:var(--mono);font-weight:600;color:rgba(255,255,255,.6);position:relative;z-index:2;transition:all .5s var(--ease)}
+.step.lit .step-dot{background:var(--teal);border-color:var(--teal);color:#fff}
+.step h4{font-family:var(--display);font-weight:700;font-size:1.18rem;margin-top:1.4rem;letter-spacing:-.01em}
+.step p{margin-top:.6rem;color:rgba(255,255,255,.55);font-size:.95rem;max-width:30ch}
+
+/* ---------- Values ---------- */
+.values{background:var(--white);border-block:1px solid var(--line)}
+.val-grid{margin-top:clamp(2.5rem,5vh,3.6rem);display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:640px){.val-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.val-grid{grid-template-columns:repeat(4,1fr)}}
+.val{background:var(--white);padding:clamp(1.8rem,3vw,2.4rem);position:relative;transition:background .4s var(--ease)}
+.val:hover{background:var(--paper)}
+.val-ic{width:42px;height:42px;display:grid;place-items:center;color:var(--teal);margin-bottom:1.4rem}
+.val-ic svg{width:30px;height:30px;stroke:var(--teal);stroke-width:1.4;fill:none}
+.val h4{font-family:var(--display);font-weight:700;font-size:1.18rem;letter-spacing:-.01em}
+.val p{margin-top:.7rem;color:var(--slate);font-size:.95rem}
+.val .vno{position:absolute;top:1.4rem;right:1.6rem;font-family:var(--mono);font-size:.72rem;color:var(--line-strong)}
+
+/* ---------- Vehicles strip ---------- */
+.fleet{background:var(--paper)}
+.fleet-grid{margin-top:clamp(2.4rem,5vh,3.4rem);display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-strong);border:1px solid var(--line-strong)}
+@media(min-width:760px){.fleet-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1080px){.fleet-grid{grid-template-columns:repeat(5,1fr)}}
+.fl{background:var(--paper);padding:1.8rem 1.4rem;display:flex;flex-direction:column;gap:1.1rem;transition:background .35s,transform .35s var(--ease)}
+.fl:hover{background:var(--ink);transform:translateZ(0)}
+.fl svg{width:42px;height:30px;stroke:var(--slate);stroke-width:1.5;fill:none;transition:stroke .35s}
+.fl:hover svg{stroke:var(--teal-soft)}
+.fl b{font-family:var(--display);font-weight:600;font-size:1.02rem;color:var(--ink);transition:color .35s}
+.fl:hover b{color:#fff}
+.fl span{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--slate-2);text-transform:uppercase;transition:color .35s}
+.fl:hover span{color:var(--teal)}
+
+/* ---------- FAQ ---------- */
+.faq{background:var(--white);border-top:1px solid var(--line)}
+.faq-grid{display:grid;grid-template-columns:1fr;gap:clamp(2.5rem,5vw,4rem);margin-top:1rem}
+@media(min-width:900px){.faq-grid{grid-template-columns:.85fr 1.15fr;align-items:start}}
+.faq-list{border-top:1px solid var(--line)}
+.fitem{border-bottom:1px solid var(--line)}
+.fq{width:100%;display:flex;justify-content:space-between;gap:1.5rem;align-items:center;text-align:left;padding:1.4rem 0;font-family:var(--display);font-weight:600;font-size:clamp(1.02rem,2vw,1.18rem);color:var(--ink);transition:color .3s}
+.fq:hover{color:var(--teal-deep)}
+.fq .pm{position:relative;flex-shrink:0;width:18px;height:18px}
+.fq .pm::before,.fq .pm::after{content:"";position:absolute;background:var(--teal);transition:transform .4s var(--ease)}
+.fq .pm::before{top:8px;left:0;width:100%;height:2px}
+.fq .pm::after{left:8px;top:0;height:100%;width:2px}
+.fitem.open .fq .pm::after{transform:scaleY(0)}
+.fa{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+.fa p{padding-bottom:1.4rem;color:var(--slate);max-width:54ch}
+
+/* ---------- Contact ---------- */
+.contact{background:var(--ink);color:var(--white);overflow:hidden}
+.contact .eyebrow{color:var(--teal-soft)}
+.contact .eyebrow::before{background:var(--teal-soft)}
+.contact .eyebrow .no{color:rgba(255,255,255,.45)}
+.contact-grid{display:grid;grid-template-columns:1fr;gap:clamp(2.5rem,5vw,4rem)}
+@media(min-width:920px){.contact-grid{grid-template-columns:1fr 1fr}}
+.contact h2{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.02em;color:#fff}
+.contact h2 em{font-style:normal;color:var(--teal)}
+.contact-lead{margin-top:1.6rem;color:rgba(255,255,255,.62);max-width:42ch;font-size:clamp(1.02rem,2vw,1.15rem)}
+.cc-rows{margin-top:2.6rem;display:flex;flex-direction:column;gap:0}
+.cc{display:flex;align-items:center;gap:1.2rem;padding:1.3rem 0;border-top:1px solid rgba(255,255,255,.12)}
+.cc:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.cc-ic{flex-shrink:0;width:46px;height:46px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;transition:all .35s var(--ease)}
+.cc:hover .cc-ic{background:var(--teal);border-color:var(--teal)}
+.cc-ic svg{width:19px;height:19px;stroke:var(--teal-soft);stroke-width:1.6;fill:none;transition:stroke .35s}
+.cc:hover .cc-ic svg{stroke:#fff}
+.cc-tx .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.cc-tx .val{display:block;font-family:var(--display);font-weight:600;font-size:clamp(1.1rem,2.4vw,1.4rem);color:#fff;margin-top:.2rem;transition:color .3s}
+.cc:hover .cc-tx .val{color:var(--teal-soft)}
+.contact-side{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:3px;overflow:hidden;display:flex;flex-direction:column}
+.cs-head{padding:1.4rem 1.6rem;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center}
+.cs-head .t{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.cs-mode{display:flex;flex-direction:column;gap:0;padding:.5rem 0}
+.csm{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.6rem}
+.csm svg{width:22px;height:22px;stroke:var(--teal);stroke-width:1.5;fill:none;flex-shrink:0;margin-top:2px}
+.csm b{font-family:var(--display);font-weight:600;color:#fff;font-size:1.02rem}
+.csm p{color:rgba(255,255,255,.55);font-size:.9rem;margin-top:.2rem}
+.cs-cta{margin-top:auto;padding:1.4rem 1.6rem;border-top:1px solid rgba(255,255,255,.1)}
+.cs-cta a{display:flex;align-items:center;justify-content:center;gap:.6em;background:var(--teal);color:#fff;padding:1em;border-radius:2px;font-weight:600;transition:background .3s,transform .3s var(--ease)}
+.cs-cta a:hover{background:var(--teal-deep);transform:translateY(-2px)}
+.cs-cta a svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.8}
+
+/* ---------- Footer ---------- */
+footer{background:#12171a;color:rgba(255,255,255,.55);border-top:1px solid rgba(255,255,255,.08)}
+.foot{max-width:var(--maxw);margin:0 auto;padding:clamp(2.5rem,5vw,3.5rem) var(--pad)}
+.foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;align-items:flex-start;padding-bottom:2.2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.foot-brand b{font-family:var(--display);font-weight:800;font-size:1.25rem;color:#fff;letter-spacing:-.01em}
+.foot-brand span{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.3rem}
+.foot-brand p{margin-top:1rem;max-width:34ch;font-size:.9rem}
+.foot-nav{display:flex;flex-wrap:wrap;gap:1.4rem}
+.foot-nav a{font-size:.88rem;transition:color .25s}
+.foot-nav a:hover{color:var(--teal-soft)}
+.foot-bottom{padding-top:1.8rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:center;font-size:.82rem}
+.foot-bottom .hrs{font-family:var(--mono);letter-spacing:.04em;color:rgba(255,255,255,.45)}
+.credit a{color:var(--teal-soft);font-weight:500;transition:color .25s}
+.credit a:hover{color:#fff}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+@media(max-width:860px){
+  .nav-links,.nav>.nav-cta{display:none}
+  .burger{display:block}
+  .hero-meta{display:none}
+  .about-card{position:static}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .hero h1 .ln i{transform:none}
+  .marquee-track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="load-stamp"><span>Εκτελωνιστικό Γραφείο</span></div>
+  <div class="load-bar"><span></span></div>
+  <div class="load-no">ΙΩΑΝΝΗΣ ΚΑΠΟΥΤΣΗΣ</div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header id="hdr">
+  <nav class="nav">
+    <a href="#top" class="brand" aria-label="Ιωάννης Καπούτσης — Αρχική">
+      <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png" alt="Λογότυπο Ιωάννης Καπούτσης Εκτελωνιστικό Γραφείο" loading="eager">
+    </a>
+    <div class="nav-links">
+      <a href="#about">Το γραφείο</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#process">Διαδικασία</a>
+      <a href="#faq">Ερωτήσεις</a>
+      <a href="#contact" class="nav-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.7 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.27a2 2 0 0 1 2.11-.45c.88.34 1.8.57 2.74.7A2 2 0 0 1 22 16.92z"/></svg>
+        Επικοινωνία
+      </a>
+    </div>
+    <button class="burger" id="burger" aria-label="Μενού" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"><span class="mm-no">01</span> Το γραφείο</a>
+  <a href="#services"><span class="mm-no">02</span> Υπηρεσίες</a>
+  <a href="#process"><span class="mm-no">03</span> Διαδικασία</a>
+  <a href="#faq"><span class="mm-no">04</span> Ερωτήσεις</a>
+  <a href="#contact"><span class="mm-no">05</span> Επικοινωνία</a>
+  <div class="mm-foot">+30 694 285 5741 · Δευ–Παρ 09:00–18:00</div>
+</div>
+
+<!-- ============ HERO ============ -->
+<main id="top">
+<section class="hero">
+  <div class="hero-grid"></div>
+  <svg class="hero-route" viewBox="0 0 620 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="120" y1="120" x2="120" y2="680" stroke-width="1.5"/>
+    <path d="M120 200 C 120 320, 460 360, 460 480" fill="none" stroke-width="1.5"/>
+    <path class="live" d="M120 200 C 120 320, 460 360, 460 480" fill="none" stroke-width="2"/>
+    <line class="live" x1="120" y1="120" x2="120" y2="680" stroke-width="2" stroke-dasharray="6 9"/>
+    <circle class="node" cx="120" cy="120" r="9"/>
+    <circle class="node" cx="120" cy="200" r="6"/>
+    <circle class="node" cx="460" cy="480" r="9"/>
+    <circle class="node" cx="120" cy="680" r="6"/>
+    <circle class="pulse" cx="460" cy="480" r="5"/>
+    <circle class="pulse" cx="120" cy="120" r="4"/>
+  </svg>
+
+  <div class="hero-inner">
+    <span class="hero-tag"><span class="dot"></span>Εκτελωνισμός οχημάτων · Πανελλαδικά</span>
+    <h1>
+      <span class="ln"><i>Από το τελωνείο</i></span>
+      <span class="ln"><i>μέχρι την <span class="t">πινακίδα</span>,</i></span>
+      <span class="ln"><i>χωρίς αγωνία.</i></span>
+    </h1>
+    <p class="hero-sub">Αναλαμβάνουμε όλη τη διαδικασία εκτελωνισμού του οχήματός σας — με καθαρά βήματα, σωστή εκτίμηση κόστους από την αρχή και έναν άνθρωπο δίπλα σας σε κάθε στάδιο.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">
+        Ζητήστε εκτίμηση κόστους
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#services" class="btn btn-ghost">Δείτε τι αναλαμβάνουμε</a>
+    </div>
+    <div class="scroll-cue"><span class="ar"></span>Κυλήστε</div>
+  </div>
+
+  <div class="hero-meta">
+    <div>ΩΡΑΡΙΟ ΓΡΑΦΕΙΟΥ</div>
+    <div><b>Δευ–Παρ 09:00–18:00</b></div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="mq">
+    <span>Επιβατικά αυτοκίνητα<span class="sep">✦</span>Μοτοσυκλέτες<span class="sep">✦</span>Φορτηγά<span class="sep">✦</span>Αντίκες οχήματα<span class="sep">✦</span>Μηχανήματα ειδικών χρήσεων<span class="sep">✦</span>Εκτίμηση κόστους<span class="sep">✦</span></span>
+    <span>Επιβατικά αυτοκίνητα<span class="sep">✦</span>Μοτοσυκλέτες<span class="sep">✦</span>Φορτηγά<span class="sep">✦</span>Αντίκες οχήματα<span class="sep">✦</span>Μηχανήματα ειδικών χρήσεων<span class="sep">✦</span>Εκτίμηση κόστους<span class="sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <span class="eyebrow reveal"><span class="no">01</span> Το γραφείο</span>
+      <h2 class="sec-title reveal">Ξέρουμε το αντικείμενο. Εσείς μένετε ήσυχοι.</h2>
+      <p class="reveal d1">Το εκτελωνιστικό μας γραφείο ασχολείται αποκλειστικά με τον εκτελωνισμό οχημάτων — και αυτό φαίνεται στη δουλειά μας. Με πολλά χρόνια εμπειρίας, αναλαμβάνουμε κάθε κατηγορία οχήματος: επιβατικά, μοτοσυκλέτες, αντίκες, φορτηγά, αλλά και μηχανήματα ειδικών χρήσεων.</p>
+      <p class="reveal d1">Κάθε υπόθεση είναι διαφορετική. Άλλη απαιτεί λίγα χαρτιά, άλλη είναι πιο μπλεγμένη. <strong>Σε κάθε περίπτωση τη χειριζόμαστε με την ίδια προσοχή και συνέπεια</strong>, όσο απλή ή σύνθετη κι αν είναι.</p>
+      <p class="reveal d2">Η ομάδα μας τρέχει όλες τις διαδικασίες για εσάς και σας εξηγεί τι γίνεται σε κάθε βήμα. Δεν χρειάζεται να ξέρετε εσείς τα τελωνειακά — αυτή είναι δική μας δουλειά.</p>
+      <blockquote class="pullquote reveal d2">«Σας λέμε από την αρχή τι κοστίζει το όχημα τελειωμένο — όχι αφού έχετε ήδη μπει στη διαδικασία.»</blockquote>
+    </div>
+
+    <aside class="about-card reveal d2">
+      <div class="card-head">
+        <span class="cl">Φάκελος εκτελωνισμού</span>
+        <span class="st"><span class="dt"></span>Ενεργό</span>
+      </div>
+      <dl>
+        <div class="spec"><dt>Αντικείμενο</dt><dd>Εκτελωνισμός οχημάτων<small>Αποκλειστική εξειδίκευση</small></dd></div>
+        <div class="spec"><dt>Κάλυψη</dt><dd>Όλη η Ελλάδα<small>Εξ αποστάσεως & δια ζώσης</small></dd></div>
+        <div class="spec"><dt>Εκτίμηση</dt><dd>Πριν την αγορά<small>Καθαρό κόστος από την αρχή</small></dd></div>
+        <div class="spec"><dt>Ωράριο</dt><dd>09:00–18:00<small>Δευτέρα έως Παρασκευή</small></dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services" id="services">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="no">02</span> Υπηρεσίες</span>
+    <h2 class="sec-title reveal">Τι αναλαμβάνουμε για εσάς</h2>
+    <p class="lead reveal d1" style="margin-top:1.3rem">Από την πρώτη σκέψη για αγορά μέχρι το όχημα να είναι έτοιμο στο όνομά σας. Πατήστε για να δείτε αναλυτικά.</p>
+
+    <div class="svc-list reveal d1">
+      <div class="svc">
+        <button class="svc-btn" aria-expanded="false">
+          <span class="svc-no">01</span>
+          <span class="svc-name">Εκτελωνισμός οχημάτων κάθε κατηγορίας</span>
+          <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="svc-body"><div class="svc-body-in">
+          <p>Επιβατικά αυτοκίνητα, μοτοσυκλέτες, φορτηγά, αντίκες και μηχανήματα ειδικών χρήσεων. Όποιο κι αν είναι το όχημα, αναλαμβάνουμε όλη τη διαδικασία ώστε να περάσει νόμιμα και σωστά το τελωνείο.</p>
+          <div class="svc-tags"><span>Επιβατικά</span><span>Μοτοσυκλέτες</span><span>Φορτηγά</span><span>Αντίκες</span><span>Μηχανήματα</span></div>
+        </div></div>
+      </div>
+      <div class="svc">
+        <button class="svc-btn" aria-expanded="false">
+          <span class="svc-no">02</span>
+          <span class="svc-name">Εκτίμηση κόστους πριν την αγορά</span>
+          <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="svc-body"><div class="svc-body-in">
+          <p>Πριν δώσετε προκαταβολή ή κλείσετε οτιδήποτε, σας λέμε πόσο θα κοστίσει το όχημα τελειωμένο. Έτσι ξέρετε από την αρχή αν συμφέρει — χωρίς εκπλήξεις στην πορεία.</p>
+          <div class="svc-tags"><span>Πριν την αγορά</span><span>Καθαρό νούμερο</span><span>Χωρίς εκπλήξεις</span></div>
+        </div></div>
+      </div>
+      <div class="svc">
+        <button class="svc-btn" aria-expanded="false">
+          <span class="svc-no">03</span>
+          <span class="svc-name">Διεκπεραίωση όλων των διαδικασιών</span>
+          <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="svc-body"><div class="svc-body-in">
+          <p>Αναλαμβάνουμε τα χαρτιά, τις τελωνειακές υποχρεώσεις και κάθε βήμα μέχρι το τέλος. Εσείς δεν χρειάζεται να τρέχετε σε υπηρεσίες — εμείς το κάνουμε και σας κρατάμε ενήμερους.</p>
+          <div class="svc-tags"><span>Πλήρης διαχείριση</span><span>Όλα τα έγγραφα</span><span>Ενημέρωση βήμα-βήμα</span></div>
+        </div></div>
+      </div>
+      <div class="svc">
+        <button class="svc-btn" aria-expanded="false">
+          <span class="svc-no">04</span>
+          <span class="svc-name">Εξυπηρέτηση εξ αποστάσεως ή στο γραφείο</span>
+          <span class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="svc-body"><div class="svc-body-in">
+          <p>Είστε σε άλλη πόλη ή δεν προλαβαίνετε; Μπορούμε να τα κανονίσουμε όλα από απόσταση. Προτιμάτε να τα πούμε από κοντά; Σας περιμένουμε στο γραφείο. Όπως σας βολεύει.</p>
+          <div class="svc-tags"><span>Πανελλαδικά</span><span>Online</span><span>Δια ζώσης</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process" id="process">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="no">03</span> Πώς δουλεύουμε</span>
+    <h2 class="sec-title reveal">Τέσσερα βήματα, χωρίς άγχος</h2>
+    <p class="lead reveal d1">Σας εξηγούμε πού βρισκόμαστε σε κάθε στάδιο — ώστε να ξέρετε πάντα τι ακολουθεί.</p>
+
+    <div class="rail reveal d1">
+      <div class="rail-fill" id="railFill"></div>
+      <div class="steps">
+        <div class="step"><div class="step-dot">01</div><h4>Επικοινωνία</h4><p>Μας λέτε τι όχημα βλέπετε και από πού. Ακούμε την περίπτωσή σας.</p></div>
+        <div class="step"><div class="step-dot">02</div><h4>Εκτίμηση κόστους</h4><p>Σας δίνουμε καθαρή εικόνα του τελικού κόστους πριν αποφασίσετε.</p></div>
+        <div class="step"><div class="step-dot">03</div><h4>Διαδικασία</h4><p>Αναλαμβάνουμε τα χαρτιά και το τελωνείο, με ενημέρωση σε κάθε βήμα.</p></div>
+        <div class="step"><div class="step-dot">04</div><h4>Παράδοση</h4><p>Το όχημα είναι έτοιμο και νόμιμο στο όνομά σας. Τελειώσαμε.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLEET / CATEGORIES ============ -->
+<section class="fleet">
+  <div class="wrap" style="padding-top:clamp(3.5rem,7vh,5.5rem);padding-bottom:clamp(3.5rem,7vh,5.5rem)">
+    <span class="eyebrow reveal"><span class="no">04</span> Κατηγορίες οχημάτων</span>
+    <h2 class="sec-title reveal">Ό,τι κι αν εκτελωνίζετε</h2>
+    <div class="fleet-grid reveal d1">
+      <div class="fl"><svg viewBox="0 0 48 32"><path d="M4 22h40M8 22l3-9a4 4 0 0 1 4-3h18a4 4 0 0 1 4 3l3 9M14 22v3M34 22v3"/><circle cx="14" cy="22" r="3"/><circle cx="34" cy="22" r="3"/></svg><b>Επιβατικά</b><span>Αυτοκίνητα</span></div>
+      <div class="fl"><svg viewBox="0 0 48 32"><circle cx="11" cy="22" r="6"/><circle cx="37" cy="22" r="6"/><path d="M11 22l8-9h8l4 9M27 13l3-4h5"/></svg><b>Μοτοσυκλέτες</b><span>Δίκυκλα</span></div>
+      <div class="fl"><svg viewBox="0 0 48 32"><path d="M4 10h22v12H4zM26 14h10l6 5v3H26zM10 22v3M36 22v3"/><circle cx="13" cy="22" r="3"/><circle cx="36" cy="22" r="3"/></svg><b>Φορτηγά</b><span>Επαγγελματικά</span></div>
+      <div class="fl"><svg viewBox="0 0 48 32"><path d="M6 22h36M10 22l2-7h16l6 7M14 22v3M30 22v3"/><circle cx="14" cy="22" r="2.5"/><circle cx="30" cy="22" r="2.5"/><path d="M12 15V11h10v4"/></svg><b>Αντίκες</b><span>Συλλεκτικά</span></div>
+      <div class="fl"><svg viewBox="0 0 48 32"><path d="M6 22h14v-8h8l6 6h6v2M10 22v3M30 22v3"/><circle cx="10" cy="22" r="2.5"/><circle cx="30" cy="22" r="2.5"/><path d="M20 14V9h6"/></svg><b>Μηχανήματα</b><span>Ειδικών χρήσεων</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUES ============ -->
+<section class="values">
+  <div class="wrap">
+    <span class="eyebrow reveal"><span class="no">05</span> Γιατί εμάς</span>
+    <h2 class="sec-title reveal">Συνεργασία χτισμένη στην εμπιστοσύνη</h2>
+    <div class="val-grid reveal d1">
+      <div class="val"><span class="vno">01</span><div class="val-ic"><svg viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg></div><h4>Εμπιστοσύνη</h4><p>Χτίζουμε σχέσεις, όχι απλά συναλλαγές. Οι πελάτες μας ξαναέρχονται και μας συστήνουν.</p></div>
+      <div class="val"><span class="vno">02</span><div class="val-ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div><h4>Υπευθυνότητα</h4><p>Αναλαμβάνουμε την υπόθεσή σας από την αρχή ως το τέλος και την τρέχουμε σαν δική μας.</p></div>
+      <div class="val"><span class="vno">03</span><div class="val-ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h4>Εχεμύθεια</h4><p>Ό,τι μας εμπιστεύεστε μένει μεταξύ μας. Διακριτικότητα σε κάθε υπόθεση.</p></div>
+      <div class="val"><span class="vno">04</span><div class="val-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div><h4>Συνέπεια</h4><p>Λέμε τι θα κάνουμε και το κάνουμε στην ώρα του. Χωρίς δικαιολογίες και καθυστερήσεις.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap faq-grid">
+    <div>
+      <span class="eyebrow reveal"><span class="no">06</span> Ερωτήσεις</span>
+      <h2 class="sec-title reveal">Συχνές απορίες</h2>
+      <p class="lead reveal d1" style="margin-top:1.3rem">Δεν βρήκατε την απάντηση; Πάρτε μας τηλέφωνο — θα τα πούμε απλά.</p>
+    </div>
+    <div class="faq-list reveal d1">
+      <div class="fitem">
+        <button class="fq" aria-expanded="false">Πότε πρέπει να επικοινωνήσω μαζί σας;<span class="pm"></span></button>
+        <div class="fa"><p>Ιδανικά πριν αγοράσετε το όχημα. Έτσι σας δίνουμε εκτίμηση κόστους από την αρχή και ξέρετε ακριβώς τι θα πληρώσετε τελειωμένο, πριν δεσμευτείτε σε κάτι.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false">Τι οχήματα αναλαμβάνετε;<span class="pm"></span></button>
+        <div class="fa"><p>Όλες τις κατηγορίες: επιβατικά αυτοκίνητα, μοτοσυκλέτες, φορτηγά, αντίκες και μηχανήματα ειδικών χρήσεων. Ανεξάρτητα από το πόσο απλή ή σύνθετη είναι η περίπτωση.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false">Μπορείτε να τα κανονίσετε όλα από απόσταση;<span class="pm"></span></button>
+        <div class="fa"><p>Ναι. Εξυπηρετούμε πελάτες σε όλη την Ελλάδα εξ αποστάσεως. Αν προτιμάτε να τα πούμε από κοντά, μπορούμε να κλείσουμε ραντεβού στο γραφείο — όπως σας βολεύει.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false">Χρειάζεται να ξέρω κάτι από τελωνειακά;<span class="pm"></span></button>
+        <div class="fa"><p>Όχι, αυτή είναι η δική μας δουλειά. Εσείς μας δίνετε τα στοιχεία του οχήματος και εμείς αναλαμβάνουμε τα υπόλοιπα, εξηγώντας σας με απλά λόγια τι γίνεται σε κάθε στάδιο.</p></div>
+      </div>
+      <div class="fitem">
+        <button class="fq" aria-expanded="false">Ποιο είναι το ωράριό σας;<span class="pm"></span></button>
+        <div class="fa"><p>Το γραφείο λειτουργεί Δευτέρα έως Παρασκευή, 09:00 με 18:00. Πάρτε μας τηλέφωνο μέσα σε αυτό το διάστημα και θα σας εξυπηρετήσουμε.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow reveal"><span class="no">07</span> Επικοινωνία</span>
+      <h2 class="reveal">Ας <em>ξεκινήσουμε</em>.</h2>
+      <p class="contact-lead reveal d1">Σκέφτεστε να φέρετε όχημα ή βρισκόσαστε ήδη στη διαδικασία; Πάρτε μας τηλέφωνο και θα σας πούμε πώς προχωράμε — απλά και καθαρά.</p>
+      <div class="cc-rows reveal d1">
+        <a class="cc" href="tel:+306942855741">
+          <span class="cc-ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.7 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.27a2 2 0 0 1 2.11-.45c.88.34 1.8.57 2.74.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <span class="cc-tx"><span class="lab">Τηλέφωνο</span><span class="val">+30 694 285 5741</span></span>
+        </a>
+        <div class="cc">
+          <span class="cc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+          <span class="cc-tx"><span class="lab">Ωράριο</span><span class="val">Δευ–Παρ · 09:00–18:00</span></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="contact-side reveal d2">
+      <div class="cs-head"><span class="t">Πώς σας εξυπηρετούμε</span></div>
+      <div class="cs-mode">
+        <div class="csm">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg>
+          <div><b>Εξ αποστάσεως</b><p>Τα κανονίζουμε όλα online, όπου κι αν βρίσκεστε στην Ελλάδα.</p></div>
+        </div>
+        <div class="csm">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><b>Δια ζώσης</b><p>Σας περιμένουμε στο γραφείο για να τα πούμε από κοντά.</p></div>
+        </div>
+      </div>
+      <div class="cs-cta">
+        <a href="tel:+306942855741">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.7 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.27a2 2 0 0 1 2.11-.45c.88.34 1.8.57 2.74.7A2 2 0 0 1 22 16.92z"/></svg>
+          Καλέστε μας τώρα
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <b>Ιωάννης Καπούτσης</b>
+        <span>Εκτελωνιστικό Γραφείο</span>
+        <p>Εκτελωνισμός οχημάτων κάθε κατηγορίας, με καθαρές διαδικασίες και σωστή εκτίμηση κόστους από την αρχή.</p>
+      </div>
+      <nav class="foot-nav">
+        <a href="#about">Το γραφείο</a>
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#process">Διαδικασία</a>
+        <a href="#faq">Ερωτήσεις</a>
+        <a href="#contact">Επικοινωνία</a>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Ιωάννης Καπούτσης — Εκτελωνιστικό Γραφείο</span>
+      <span class="hrs">Δευ–Παρ 09:00–18:00 · +30 694 285 5741</span>
+      <span class="credit">Designed by <a href="https://www.advonmedia.com" target="_blank" rel="noopener">Advon Media</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  const $=(s,c)=>(c||document).querySelector(s);
+  const $$=(s,c)=>Array.from((c||document).querySelectorAll(s));
+
+  // Loader
+  window.addEventListener('load',()=>{setTimeout(()=>$('#loader').classList.add('done'),1500);});
+  setTimeout(()=>$('#loader').classList.add('done'),2600);
+
+  // Year
+  $('#yr').textContent=new Date().getFullYear();
+
+  // Nav scroll state
+  const hdr=$('#hdr');
+  const onScroll=()=>{hdr.classList.toggle('scrolled',window.scrollY>40);};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // Mobile menu
+  const burger=$('#burger'),mm=$('#mobileMenu');
+  const toggleMenu=(force)=>{
+    const open=force!==undefined?force:!mm.classList.contains('open');
+    mm.classList.toggle('open',open);burger.classList.toggle('open',open);
+    burger.setAttribute('aria-expanded',open);
+    document.body.style.overflow=open?'hidden':'';
+  };
+  burger.addEventListener('click',()=>toggleMenu());
+  $$('a',mm).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+
+  // Services accordion
+  $$('.svc').forEach(svc=>{
+    const btn=$('.svc-btn',svc),body=$('.svc-body',svc);
+    btn.addEventListener('click',()=>{
+      const open=svc.classList.contains('open');
+      $$('.svc').forEach(o=>{o.classList.remove('open');$('.svc-body',o).style.maxHeight=null;$('.svc-btn',o).setAttribute('aria-expanded','false');});
+      if(!open){svc.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';btn.setAttribute('aria-expanded','true');}
+    });
+  });
+
+  // FAQ accordion
+  $$('.fitem').forEach(it=>{
+    const btn=$('.fq',it),ans=$('.fa',it);
+    btn.addEventListener('click',()=>{
+      const open=it.classList.contains('open');
+      $$('.fitem').forEach(o=>{o.classList.remove('open');$('.fa',o).style.maxHeight=null;$('.fq',o).setAttribute('aria-expanded','false');});
+      if(!open){it.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';btn.setAttribute('aria-expanded','true');}
+    });
+  });
+
+  // Reveal
+  const ro=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});
+  },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+  $$('.reveal').forEach(el=>ro.observe(el));
+
+  // Process rail fill + step lighting
+  const railSec=$('#process'),railFill=$('#railFill'),steps=$$('.step');
+  const rio=new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        railFill.style.width='100%';
+        steps.forEach((s,i)=>setTimeout(()=>s.classList.add('lit'),250+i*260));
+        rio.unobserve(e.target);
+      }
+    });
+  },{threshold:.4});
+  if(railSec)rio.observe(railSec);
+})();
+</script>
+</body>
+</html>

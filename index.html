@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ιωάννης Καπούτσης — Εκτελωνιστικό Γραφείο</title>
 <meta name="description" content="Εκτελωνισμός οχημάτων κάθε κατηγορίας — αυτοκίνητα, μηχανές, φορτηγά, αντίκες, μηχανήματα. Καθαρό κόστος από την αρχή και ένας άνθρωπος δίπλα σας σε κάθε βήμα.">
-<link rel="icon" href="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png">
+<link rel="icon" href="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/ogoka%5B.jpg">
 <meta property="og:title" content="Ιωάννης Καπούτσης — Εκτελωνιστικό Γραφείο">
 <meta property="og:description" content="Εκτελωνισμός οχημάτων με καθαρές διαδικασίες και σωστό κόστος από την αρχή.">
 <meta property="og:image" content="https://raw.githubusercontent.com/agelmet/TAMPAKI/main/Gemini_Generated_Image_ra0y0hra0y0hra0y.png">
@@ -38,7 +38,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 body.loaded #loader{transform:translateY(-100%)}
 .loader-glow{position:absolute;width:60vw;height:60vw;max-width:680px;max-height:680px;border-radius:50%;background:radial-gradient(circle,rgba(28,114,112,.32),transparent 65%);filter:blur(20px);animation:glowPulse 3s var(--ease) infinite}
 @keyframes glowPulse{0%,100%{opacity:.5;transform:scale(.92)}50%{opacity:1;transform:scale(1.05)}}
-.load-logo{position:relative;z-index:2;width:min(65vw,380px);aspect-ratio:1/1;object-fit:contain;padding:1.8rem;background:#fff;border-radius:50%;opacity:0;transform:translateY(14px) scale(.96);animation:loadLogoIn 1s var(--ease) .1s forwards;box-shadow:0 20px 60px -18px rgba(0,0,0,.6)}
+.load-logo{position:relative;z-index:2;width:min(65vw,380px);padding:1.4rem;background:#fff;border-radius:16px;opacity:0;transform:translateY(14px) scale(.96);animation:loadLogoIn 1s var(--ease) .1s forwards;box-shadow:0 20px 60px -18px rgba(0,0,0,.6)}
 @keyframes loadLogoIn{to{opacity:1;transform:none}}
 .load-bar{position:relative;z-index:2;margin-top:2.2rem;width:min(58vw,300px);height:2px;background:rgba(255,255,255,.13);overflow:hidden;border-radius:2px}
 .load-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--teal-br));box-shadow:0 0 16px rgba(38,147,143,.7);animation:loadFill 1.2s var(--ease-io) .2s forwards}
@@ -49,7 +49,7 @@ body.loaded #loader{transform:translateY(-100%)}
 header{position:fixed;top:0;left:0;width:100%;z-index:1000;transition:background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s;border-bottom:1px solid transparent}
 header.scrolled{background:rgba(244,245,243,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line);box-shadow:0 4px 34px rgba(22,27,30,.07)}
 .nav{max-width:var(--maxw);margin:0 auto;padding:1rem var(--pad);display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.brand img{height:110px;aspect-ratio:1/1;object-fit:contain;background:#fff;padding:0.7rem;border-radius:50%;transition:height .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);box-shadow:0 8px 26px -10px rgba(0,0,0,.5)}
+.brand img{height:110px;background:#fff;padding:0.6rem;border-radius:12px;transition:height .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);box-shadow:0 8px 26px -10px rgba(0,0,0,.5)}
 header.scrolled .brand img{height:80px;padding:0.5rem;box-shadow:0 4px 14px -8px rgba(22,27,30,.35)}
 .nav-links{display:flex;align-items:center;gap:2.1rem}
 .nav-links a{font-size:.86rem;font-weight:500;color:rgba(255,255,255,.82);position:relative;transition:color .25s;text-shadow:0 1px 8px rgba(0,0,0,.4)}
@@ -61,20 +61,53 @@ header.scrolled .nav-links a:not(.nav-cta):hover{color:var(--ink)}
 .nav-cta{display:inline-flex;align-items:center;gap:.5em;background:var(--teal);color:#fff;padding:.72em 1.3em;border-radius:3px;font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;font-weight:500;transition:background .3s,transform .3s var(--ease),box-shadow .3s;box-shadow:var(--shadow-teal)}
 .nav-cta:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:0 22px 50px -18px rgba(28,114,112,.7)}
 .nav-cta svg{width:14px;height:14px}
-.burger{display:none;width:30px;height:22px;position:relative;z-index:1100}
+.burger{display:none;width:30px;height:22px;position:relative;z-index:1100;transition:opacity .3s}
 .burger span{position:absolute;left:0;height:2px;width:100%;background:#fff;transition:.4s var(--ease);box-shadow:0 1px 6px rgba(0,0,0,.4)}
 header.scrolled .burger span{background:var(--ink);box-shadow:none}
 .burger span:nth-child(1){top:0}.burger span:nth-child(2){top:10px}.burger span:nth-child(3){top:20px}
-.burger.open span{background:#fff;box-shadow:none}
-.burger.open span:nth-child(1){top:10px;transform:rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){top:10px;transform:rotate(-45deg)}
+.burger.open {opacity:0; pointer-events:none;}
+
 .mobile-menu{position:fixed;inset:0;z-index:1050;background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:var(--pad);transform:translateY(-100%);transition:transform .6s var(--ease)}
 .mobile-menu::before{content:"";position:absolute;top:-20%;right:-10%;width:60vw;height:60vw;border-radius:50%;background:radial-gradient(circle,rgba(28,114,112,.28),transparent 65%);filter:blur(10px)}
 .mobile-menu.open{transform:translateY(0)}
 .mobile-menu a{position:relative;color:#fff;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,8vw,2.6rem);padding:.35em 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:baseline;gap:1rem}
 .mobile-menu a .mm-no{font-family:var(--mono);font-size:.8rem;color:var(--teal-br);font-weight:500}
 .mm-foot{position:relative;margin-top:2.5rem;font-family:var(--mono);color:rgba(255,255,255,.55);font-size:.82rem;letter-spacing:.1em}
+
+/* Mobile Menu Close Button */
+.btn-close-menu {
+  position: absolute;
+  top: 1.5rem;
+  right: var(--pad);
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+  z-index: 1100;
+}
+.mobile-menu.open .btn-close-menu {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+  transition-delay: 0.3s;
+}
+.btn-close-menu:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.08);
+}
+.btn-close-menu svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+}
 
 /* Hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:clamp(7rem,14vh,10rem) var(--pad) clamp(2rem,5vh,3.5rem);overflow:hidden;background:var(--ink)}
@@ -283,7 +316,7 @@ section{position:relative}
 footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(255,255,255,.08)}
 .foot{max-width:var(--maxw);margin:0 auto;padding:clamp(2.5rem,5vw,3.5rem) var(--pad)}
 .foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;align-items:flex-start;padding-bottom:2.2rem;border-bottom:1px solid rgba(255,255,255,.08)}
-.foot-brand img{height:60px;width:auto;background:#fff;padding:.5rem .7rem;border-radius:7px;margin-bottom:1.1rem;box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.foot-brand img{height:60px;width:auto;background:#fff;padding:.4rem;border-radius:8px;margin-bottom:1.1rem;box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
 .foot-brand p{max-width:34ch;font-size:.9rem}
 .foot-nav{display:flex;flex-wrap:wrap;gap:1.4rem}
 .foot-nav a{font-size:.88rem;transition:color .25s}
@@ -302,8 +335,8 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   .nav-links,.nav>.nav-cta{display:none}
   .burger{display:block}
   .about-card{position:static}
-  .brand img{height:85px}
-  header.scrolled .brand img{height:70px}
+  .brand img{height:75px}
+  header.scrolled .brand img{height:60px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -318,7 +351,7 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-glow"></div>
-  <img class="load-logo" src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png" alt="Ιωάννης Καπούτσης">
+  <img class="load-logo" src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/ogoka%5B.jpg" alt="Ιωάννης Καπούτσης">
   <div class="load-bar"><span></span></div>
   <div class="load-sub">Εκτελωνιστικό Γραφείο</div>
 </div>
@@ -327,7 +360,7 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
 <header id="hdr">
   <nav class="nav">
     <a href="#top" class="brand" aria-label="Ιωάννης Καπούτσης — Αρχική">
-      <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png" alt="Λογότυπο Ιωάννης Καπούτσης Εκτελωνιστικό Γραφείο" loading="eager">
+      <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/ogoka%5B.jpg" alt="Λογότυπο Ιωάννης Καπούτσης Εκτελωνιστικό Γραφείο" loading="eager">
     </a>
     <div class="nav-links">
       <a href="#about">Το γραφείο</a>
@@ -344,6 +377,9 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
+  <button class="btn-close-menu" id="closeMenu" aria-label="Κλείσιμο μενού">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
   <a href="#about"><span class="mm-no">01</span> Το γραφείο</a>
   <a href="#services"><span class="mm-no">02</span> Υπηρεσίες</a>
   <a href="#process"><span class="mm-no">03</span> Διαδικασία</a>
@@ -605,7 +641,7 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   <div class="foot">
     <div class="foot-top">
       <div class="foot-brand">
-        <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png" alt="Ιωάννης Καπούτσης Εκτελωνιστικό Γραφείο">
+        <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/ogoka%5B.jpg" alt="Ιωάννης Καπούτσης Εκτελωνιστικό Γραφείο">
         <p>Εκτελωνισμός οχημάτων κάθε κατηγορίας, με καθαρές διαδικασίες και κόστος γνωστό από την αρχή.</p>
       </div>
       <nav class="foot-nav">
@@ -644,14 +680,16 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   const onScroll=()=>hdr.classList.toggle('scrolled',window.scrollY>40);
   onScroll();window.addEventListener('scroll',onScroll,{passive:true});
 
-  const burger=$('#burger'),mm=$('#mobileMenu');
+  const burger=$('#burger'), mm=$('#mobileMenu'), closeMenu=$('#closeMenu');
   const toggleMenu=(force)=>{
     const open=force!==undefined?force:!mm.classList.contains('open');
-    mm.classList.toggle('open',open);burger.classList.toggle('open',open);
+    mm.classList.toggle('open',open);
+    burger.classList.toggle('open',open);
     burger.setAttribute('aria-expanded',open);
     document.body.style.overflow=open?'hidden':'';
   };
-  burger.addEventListener('click',()=>toggleMenu());
+  burger.addEventListener('click',()=>toggleMenu(true));
+  closeMenu.addEventListener('click',()=>toggleMenu(false));
   $$('a',mm).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 
   function accordion(items,btnSel,bodySel,openCls){

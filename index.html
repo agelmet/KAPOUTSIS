@@ -49,15 +49,15 @@ body.loaded #loader{transform:translateY(-100%)}
 header{position:fixed;top:0;left:0;width:100%;z-index:1000;transition:background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s;border-bottom:1px solid transparent}
 header.scrolled{background:rgba(244,245,243,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line);box-shadow:0 4px 34px rgba(22,27,30,.07)}
 .nav{max-width:var(--maxw);margin:0 auto;padding:1rem var(--pad);display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.brand img{height:64px;width:auto;background:#fff;padding:.5rem .7rem;border-radius:7px;transition:height .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);box-shadow:0 8px 26px -10px rgba(0,0,0,.5)}
-header.scrolled .brand img{height:52px;box-shadow:0 4px 14px -8px rgba(22,27,30,.35)}
+.brand img{height:85px;width:auto;background:#fff;padding:.5rem .7rem;border-radius:7px;transition:height .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);box-shadow:0 8px 26px -10px rgba(0,0,0,.5)}
+header.scrolled .brand img{height:65px;box-shadow:0 4px 14px -8px rgba(22,27,30,.35)}
 .nav-links{display:flex;align-items:center;gap:2.1rem}
 .nav-links a{font-size:.86rem;font-weight:500;color:rgba(255,255,255,.82);position:relative;transition:color .25s;text-shadow:0 1px 8px rgba(0,0,0,.4)}
-header.scrolled .nav-links a{color:var(--slate);text-shadow:none}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--teal);transition:width .3s var(--ease)}
+header.scrolled .nav-links a:not(.nav-cta){color:var(--slate);text-shadow:none}
+.nav-links a:not(.nav-cta)::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--teal);transition:width .3s var(--ease)}
 .nav-links a:hover{color:#fff}
-header.scrolled .nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::after{width:100%}
+header.scrolled .nav-links a:not(.nav-cta):hover{color:var(--ink)}
+.nav-links a:not(.nav-cta):hover::after{width:100%}
 .nav-cta{display:inline-flex;align-items:center;gap:.5em;background:var(--teal);color:#fff;padding:.72em 1.3em;border-radius:3px;font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;font-weight:500;transition:background .3s,transform .3s var(--ease),box-shadow .3s;box-shadow:var(--shadow-teal)}
 .nav-cta:hover{background:var(--teal-deep);transform:translateY(-2px);box-shadow:0 22px 50px -18px rgba(28,114,112,.7)}
 .nav-cta svg{width:14px;height:14px}
@@ -190,7 +190,7 @@ section{position:relative}
 .process .eyebrow{color:var(--teal-br)}.process .eyebrow::before{background:var(--teal-br)}.process .eyebrow .no{color:rgba(255,255,255,.45)}
 .process .sec-title{color:#fff}.process .lead{color:rgba(255,255,255,.62);margin-top:1.3rem}
 .rail{margin-top:clamp(3rem,6vh,4.5rem);position:relative}
-.rail::before{content:"";position:absolute;left:0;top:27px;width:100%;height:2px;background:rgba(255,255,255,.12)}
+.rail::before{content:"absolute";left:0;top:27px;width:100%;height:2px;background:rgba(255,255,255,.12)}
 .rail-fill{position:absolute;left:0;top:27px;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-br));box-shadow:0 0 16px rgba(38,147,143,.6);width:0;transition:width 1.4s var(--ease-io)}
 .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:2.4rem 1.5rem}
 @media(min-width:780px){.steps{grid-template-columns:repeat(4,1fr)}}
@@ -302,7 +302,7 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   .nav-links,.nav>.nav-cta{display:none}
   .burger{display:block}
   .about-card{position:static}
-  .brand img{height:52px}
+  .brand img{height:65px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -314,7 +314,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="loader">
   <div class="loader-glow"></div>
   <img class="load-logo" src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/kapoutsis.png" alt="Ιωάννης Καπούτσης">
@@ -322,7 +321,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   <div class="load-sub">Εκτελωνιστικό Γραφείο</div>
 </div>
 
-<!-- NAV -->
 <header id="hdr">
   <nav class="nav">
     <a href="#top" class="brand" aria-label="Ιωάννης Καπούτσης — Αρχική">
@@ -351,20 +349,19 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   <div class="mm-foot">+30 694 285 5741 · Δευτέρα–Παρασκευή 09:00–18:00</div>
 </div>
 
-<!-- HERO -->
 <main id="top">
 <section class="hero">
   <div class="hero-bg">
-    <img src="https://raw.githubusercontent.com/agelmet/TAMPAKI/main/Gemini_Generated_Image_ra0y0hra0y0hra0y.png" alt="Λιμάνι με εισαγόμενα οχήματα σε χώρο εκτελωνισμού" loading="eager">
+    <img src="https://raw.githubusercontent.com/agelmet/KAPOUTSIS/refs/heads/main/heore.jpg" alt="Λιμάνι με εισαγόμενα οχήματα σε χώρο εκτελωνισμού" loading="eager">
   </div>
   <div class="hero-grain"></div>
 
   <div class="hero-inner">
     <span class="hero-tag hr s1"><span class="dot"></span>Εκτελωνισμός οχημάτων · Σε όλη την Ελλάδα</span>
     <h1>
-      <span class="ln"><i>Φέρτε το όχημα.</i></span>
-      <span class="ln"><i>Τα <span class="t">δύσκολα</span></i></span>
-      <span class="ln"><i>τα αναλαμβάνουμε.</i></span>
+      <span class="ln"><i>Βρήκατε το όχημα.</i></span>
+      <span class="ln"><i>Το <span class="t">τελωνείο</span></i></span>
+      <span class="ln"><i>είναι δική μας δουλειά.</i></span>
     </h1>
     <p class="hero-sub hr s2">Εκτελωνίζουμε αυτοκίνητα, μηχανές, φορτηγά και μηχανήματα από κάθε προορισμό. Καθαρό κόστος από την πρώτη στιγμή και κάποιος που σας ενημερώνει σε κάθε βήμα — όχι αόριστες υποσχέσεις.</p>
     <div class="hero-actions hr s3">
@@ -385,7 +382,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   <div class="scroll-cue"><span class="ch"></span>Κυλήστε</div>
 </section>
 
-<!-- MARQUEE -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
     <span>Αυτοκίνητα<span class="sep">&#10022;</span>Μηχανές<span class="sep">&#10022;</span>Φορτηγά<span class="sep">&#10022;</span>Αντίκες<span class="sep">&#10022;</span>Μηχανήματα ειδικών χρήσεων<span class="sep">&#10022;</span>Εκτίμηση κόστους<span class="sep">&#10022;</span></span>
@@ -393,7 +389,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </div>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="wrap about-grid">
     <div class="about-copy">
@@ -420,7 +415,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="services" id="services">
   <div class="wrap">
     <span class="eyebrow reveal"><span class="no">02</span> Υπηρεσίες</span>
@@ -476,7 +470,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- PROCESS -->
 <section class="process" id="process">
   <div class="wrap">
     <span class="eyebrow reveal"><span class="no">03</span> Πώς δουλεύουμε</span>
@@ -495,7 +488,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- FLEET -->
 <section class="fleet">
   <div class="wrap" style="padding-top:clamp(3.5rem,7vh,5.5rem);padding-bottom:clamp(3.5rem,7vh,5.5rem)">
     <span class="eyebrow reveal"><span class="no">04</span> Κατηγορίες</span>
@@ -510,7 +502,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- VALUES -->
 <section class="values">
   <div class="wrap">
     <span class="eyebrow reveal"><span class="no">05</span> Γιατί εμάς</span>
@@ -524,7 +515,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- FAQ -->
 <section class="faq" id="faq">
   <div class="wrap faq-grid">
     <div>
@@ -557,7 +547,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="wrap contact-grid">
     <div>
@@ -599,7 +588,6 @@ footer{background:#11161a;color:rgba(255,255,255,.55);border-top:1px solid rgba(
 </section>
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="foot">
     <div class="foot-top">
